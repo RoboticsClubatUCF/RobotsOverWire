@@ -1,9 +1,10 @@
 <script>
-	import BlocklySvelte from '../components/Blockly-svelte.svelte';
+	import BlocklyNew from "../components/BlocklyNew.svelte";
+
 </script>
 
 <div>
-	<BlocklySvelte />
+	<BlocklyNew></BlocklyNew>
 </div>
 
 <style></style>
