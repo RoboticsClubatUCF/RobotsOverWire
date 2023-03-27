@@ -164,10 +164,11 @@
 	function handleSave() {
 		const xml = Blockly.Xml.domToPrettyText(Blockly.Xml.workspaceToDom(workspace));
 		saved = [xml, transform];
-		
+		window.sessionStorage.setItem('ws', JSON.stringify(saved));
 	}
 
 	function handleRestore() {
+		saved = JSON.parse(window.sessionStorage.getItem('ws')!);
 		Blockly.Xml.clearWorkspaceAndLoadFromXml(Blockly.Xml.textToDom(saved![0]), workspace);
 		transform = saved![1];
 	}
@@ -177,7 +178,7 @@
 		const lang = (Blockly as any)['JavaScript'];
 		try {
 			code = lang.workspaceToCode(workspace);
-			saveWorkspace();
+
 		} catch (_err) {
 			// Happens e.g. when deleting a function that is used somewhere.
 			// Blockly will quickly recover from this, so it's not a big deal.
@@ -186,7 +187,7 @@
 	}
 	function updateCodeString() {
 		codeString = robotControlGenerator.workspaceToCode(workspace);
-		saveWorkspace();
+		handleSave()
 		return codeString;
 	}
 	let botid: number;
@@ -199,12 +200,8 @@
 			<option value="0">0</option>
 			<option value="1">1</option>
 		</select>
-		<button on:click={handleRestore}>
-			Load Workspace
-		</button>
-		<button on:click={handleSave}>
-			Save Workspace
-		</button>
+		<button class="load_button" on:click={handleRestore}> Load Workspace </button>
+		<button class="save_button" on:click={handleSave}> Save Workspace </button>
 		<div class="blockly-container">
 			<BlocklyComponent
 				{config}
@@ -216,9 +213,8 @@
 		</div>
 		<hr />
 		{codeString}
-		<button on:click={updateCodeString}> Update Code String </button>
 		<form action="?/publishCode" method="post">
-			<button type="submit" on:click={updateCodeString}>Send Code!</button>
+			<button class="send_button" type="submit" on:click={updateCodeString}>Send Code!</button>
 			<input
 				style="visibility: hidden;"
 				type="text"
@@ -232,6 +228,25 @@
 </main>
 
 <style>
+	button{
+		padding: 10px;
+		border: none;
+		text-align: center;
+		text-decoration: none;
+		font-size: 16px;
+	}
+	.save_button{
+		background-color:rgb(131, 202, 203);
+	}
+	.load_button{
+		background-color: rgb(77, 139, 58);
+	}
+	.load_button:hover{
+		background-color: rgb(94, 170, 71);
+	}
+	.save_button:hover{
+		background-color: rgb(146, 235, 236);
+	}
 	main {
 		display: flex;
 		flex-direction: row;
