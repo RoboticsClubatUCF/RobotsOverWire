@@ -32,6 +32,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@picocss/pico": "^1.5.7",
 		"svelte-blockly": "^0.1.0",
 		"zeromq": "^5.3.1"
 	}

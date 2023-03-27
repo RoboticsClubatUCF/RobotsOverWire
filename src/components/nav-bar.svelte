@@ -8,4 +8,8 @@
 
 
 
-<style></style>
+<style>
+    h1{
+        color: azure;
+    }
+</style>
