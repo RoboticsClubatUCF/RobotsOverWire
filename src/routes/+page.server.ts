@@ -3,7 +3,7 @@ import type { Actions } from './$types';
 const bots = [
 	{
 		id: '0',
-		ip: 'http://192.168.137.230'
+		ip: 'http://192.168.137.209'
 	},
 	{
 		id: '1',
@@ -24,11 +24,11 @@ export const actions: Actions = {
 			console.log(code, botid);
 			const doPost = async (msg: string, botid: string) => {
 				Number(botid)
-					? await fetch(bots[0].ip, {
+					? await fetch(bots[1].ip, {
 							method: 'POST',
 							body: msg
 					  })
-					: await fetch(bots[1].ip, {
+					: await fetch(bots[0].ip, {
 							method: 'POST',
 							body: msg
 					  });

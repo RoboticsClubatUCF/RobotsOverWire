@@ -1,7 +1,6 @@
 /* TODO: Change toolbox XML ID if necessary. Can export toolbox XML from Workspace Factory. */
 import * as Blockly from 'blockly';
 export const workspace = (container: HTMLElement, toolbox: HTMLElement) => {
-
 	var options = {
 		toolbox: toolbox,
 		collapse: true,

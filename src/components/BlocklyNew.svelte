@@ -65,6 +65,42 @@
 		tooltip: 'How many seconds the bot should turn for',
 		helpUrl: ''
 	};
+	const loop_blockJson = {
+		type: 'move_loop',
+		message0: '%1 %2 %3 %4 %5',
+		args0: [
+			{
+				type: 'field_label_serializable',
+				name: 'title',
+				text: 'Loop Commands'
+			},
+			{
+				type: 'field_number',
+				name: 'loop_count',
+				value: 0,
+				min: 0,
+				max: 10,
+				precision: 1
+			},
+			{
+				type: 'field_label_serializable',
+				name: 'title_2',
+				text: 'Times'
+			},
+			{
+				type: 'input_dummy'
+			},
+			{
+				type: 'input_statement',
+				name: 'loop_code'
+			}
+		],
+		previousStatement: null,
+		nextStatement: null,
+		colour: 105,
+		tooltip: '',
+		helpUrl: ''
+	};
 	const start_blockJson = {
 		type: 'starter',
 		lastDummyAlign0: 'CENTRE',
@@ -92,6 +128,12 @@
 	Blockly.Blocks['turn_block'] = {
 		init: function () {
 			this.jsonInit(turn_blockJson);
+			var thisBlock = this;
+		}
+	};
+	Blockly.Blocks['move_loop'] = {
+		init: function () {
+			this.jsonInit(loop_blockJson);
 			var thisBlock = this;
 		}
 	};
@@ -125,7 +167,8 @@
 				colour: 300,
 				contents: [
 					{ kind: 'block', type: 'start_block' },
-					{ kind: 'block', type: 'end_block' }
+					{ kind: 'block', type: 'end_block' },
+					{ kind: 'block', type: 'move_loop' }
 				]
 			}
 		]
@@ -178,7 +221,6 @@
 		const lang = (Blockly as any)['JavaScript'];
 		try {
 			code = lang.workspaceToCode(workspace);
-
 		} catch (_err) {
 			// Happens e.g. when deleting a function that is used somewhere.
 			// Blockly will quickly recover from this, so it's not a big deal.
@@ -187,7 +229,7 @@
 	}
 	function updateCodeString() {
 		codeString = robotControlGenerator.workspaceToCode(workspace);
-		handleSave()
+		handleSave();
 		return codeString;
 	}
 	let botid: number;
@@ -212,39 +254,64 @@
 			/>
 		</div>
 		<hr />
-		{codeString}
-		<form action="?/publishCode" method="post">
-			<button class="send_button" type="submit" on:click={updateCodeString}>Send Code!</button>
-			<input
-				style="visibility: hidden;"
-				type="text"
-				name="code"
-				id="code"
-				bind:value={codeString}
-			/>
-			<input style="visibility: hidden;" type="number" name="botid" id="botid" bind:value={botid} />
-		</form>
+		<p>
+			{codeString}
+		</p>
+		<div style="display:inline-flex;">
+			<button class="generate_button" on:click={updateCodeString}>Generate Code String</button>
+			<form action="?/publishCode" method="post">
+				<button class="send_button" type="submit" on:click={updateCodeString}>Send Code!</button>
+				<input
+					style="visibility: hidden;"
+					type="text"
+					name="code"
+					id="code"
+					bind:value={codeString}
+				/>
+				<input
+					style="visibility: hidden;"
+					type="number"
+					name="botid"
+					id="botid"
+					bind:value={botid}
+				/>
+			</form>
+		</div>
 	</div>
 </main>
 
 <style>
-	button{
+	button {
 		padding: 10px;
+		margin: 10px;
 		border: none;
 		text-align: center;
 		text-decoration: none;
 		font-size: 16px;
+		flex: 2;
 	}
-	.save_button{
-		background-color:rgb(131, 202, 203);
+	.send_button {
+		background-color: rgb(96, 194, 63);
 	}
-	.load_button{
-		background-color: rgb(77, 139, 58);
+	.send_button:hover {
+		background-color: rgb(123, 223, 90);
 	}
-	.load_button:hover{
-		background-color: rgb(94, 170, 71);
+	.save_button {
+		background-color: rgb(131, 202, 203);
 	}
-	.save_button:hover{
+	.load_button {
+		background-color: rgb(138, 139, 58);
+	}
+	.generate_button {
+		background-color: rgb(85, 59, 13);
+	}
+	.generate_button:hover {
+		background-color: rgb(223, 126, 96);
+	}
+	.load_button:hover {
+		background-color: rgb(163, 170, 71);
+	}
+	.save_button:hover {
 		background-color: rgb(146, 235, 236);
 	}
 	main {

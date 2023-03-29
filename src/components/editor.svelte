@@ -1,8 +1,7 @@
 <script>
 </script>
 
-<div id="editor">
-</div>
+<div id="editor" />
 
 <style>
 </style>
