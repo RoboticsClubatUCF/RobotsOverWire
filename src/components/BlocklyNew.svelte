@@ -252,9 +252,6 @@
 			/>
 		</div>
 		<hr />
-		<p>
-			{codeString}
-		</p>
 		<div style="display:inline-flex;">
 			<button class="generate_button" on:click={updateCodeString}>Generate Code String</button>
 			<form action="?/publishCode" method="post">
@@ -275,10 +272,19 @@
 				/>
 			</form>
 		</div>
+		<p class="codeString">
+			{codeString}
+		</p>
 	</div>
 </main>
 
 <style>
+	.codeString{
+		max-width: 95vw;
+		word-wrap: break-word;
+		font-family: monospace;
+		font-size: 24px;
+	}
 	button {
 		padding: 10px;
 		margin: 10px;
