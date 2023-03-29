@@ -34,7 +34,9 @@ export const actions: Actions = {
 					  });
 			};
 			doPost(code, botid);
-		} catch (error) {}
+		} catch (error) {
+			return
+		}
 	}
 };
 

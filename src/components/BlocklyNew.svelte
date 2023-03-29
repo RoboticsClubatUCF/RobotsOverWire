@@ -10,8 +10,6 @@
 	const en: Locale = {
 		rtl: false,
 		msg: {
-			CAT_MOVEMENT: 'Movement',
-			CAT_SETUP: 'Setup',
 			...En
 		}
 	};
